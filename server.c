@@ -6,49 +6,78 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:14:41 by yamzil            #+#    #+#             */
-/*   Updated: 2021/12/28 20:07:35 by yamzil           ###   ########.fr       */
+/*   Updated: 2021/12/31 15:30:20 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void   ft_recieve_msg(int str)
+void	ft_handler(int signum)
 {
-    int i;
+   static char	c = 0xFF;
+   static int	bits = 0;
 
-    i = 0;
-    while (j < 8)
-    {
-        
-    }
+   if (signum == SIGUSR1)
+   {
+   	c ^= 0x80 >> bits;
+   }
+   else if (signum == SIGUSR2)
+   {
+   	c |= 0x80 >> bits;
+   }
+   bits++;
+   if (bits == 8)
+   {
+   	bits = 0;
+   	c = 0xFF;
+   }
 }
 
-void ft_handler(int signum)
+int	main(void)
 {
-    if (signum == SIGUSR1)
-    {
-        signal(SIGUSR1, ft_handler);
-        printf("Event Has Been Recieved Successfully\n");
-    }
+   pid_t		pid;
+
+   pid = getpid();
+   printf("PID: %d\n", pid);
+   signal(SIGUSR1, ft_handler);
+   signal(SIGUSR2, ft_handler);
+   while (1)
+   	pause();
 }
-void ft_handlerr(int signum)
-{
-    if (signum == SIGUSR2)
-    {
-        signal(SIGUSR2,ft_handlerr);
-        printf("Echec !\n");
-    }
-        
-}
-int main(void)
-{
-    printf("Server's PID : %d\n", getpid());
-     signal(SIGUSR1, ft_handler);
-     signal(SIGUSR2,ft_handlerr);
-    // if (signal(SIGUSR1,ft_handler))
-    //     printf("SECCESSFULLY");
-    // else if (signal(SIGUSR2,ft_handlerr))
-    //     printf("ECHEC");
-    while(1)
-        pause();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
