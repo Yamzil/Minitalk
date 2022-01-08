@@ -3,46 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:14:41 by yamzil            #+#    #+#             */
-/*   Updated: 2021/12/31 15:30:20 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/01/03 13:58:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	ft_handler(int signum)
+void  ft_get_bit(int bit)
 {
-   static char	c = 0xFF;
-   static int	bits = 0;
+   static char	ret;
+   int 			i;
 
-   if (signum == SIGUSR1)
+   i = 0;
+   bit = 7;
+   while(bit <= i)
    {
-   	c ^= 0x80 >> bits;
-   }
-   else if (signum == SIGUSR2)
-   {
-   	c |= 0x80 >> bits;
-   }
-   bits++;
-   if (bits == 8)
-   {
-   	bits = 0;
-   	c = 0xFF;
-   }
+	   if (bit == SIGUSR1)
+		   ret = ret | (1 << bit);
+		bit++;
+		i--;
+   }		
 }
 
 int	main(void)
 {
-   pid_t		pid;
+	pid_t	pid;
 
-   pid = getpid();
-   printf("PID: %d\n", pid);
-   signal(SIGUSR1, ft_handler);
-   signal(SIGUSR2, ft_handler);
-   while (1)
-   	pause();
+	pid = getpid();
+	printf("PID: %d\n", pid);
+	while (1)
+	{
+		signal (SIGUSR1, ft_get_bit);
+		signal (SIGUSR2, ft_get_bit);
+	}
 }
 
 
