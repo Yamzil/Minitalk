@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/26 23:03:02 by yamzil            #+#    #+#              #
-#    Updated: 2022/01/08 18:48:54 by marvin           ###   ########.fr        #
+#    Updated: 2022/01/16 20:04:27 by yamzil           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,18 @@ CFLAGS = -Wall -Werror -Wextra
 
 CC = gcc
 
+SRC = minitalk_utils.c
+
+INC = minitalk.h
+
 all :$(NAME) 
 
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(server) $(client)
-	ar rc $(NAME) $(server) $(client)
-	$(CC) $(CFLAGS) $(server) -o server
-	$(CC) $(CFLAGS) $(client) -o client
+	@$(CC) $(CFLAGS) $(SRC) $(server) -o server -I $(INC)
+	@$(CC) $(CFLAGS) $(client) -o client -I $(INC)
+	@echo "ⓜⓘⓝⓘⓣⓐⓛⓚ"
 	@echo Everything is up ! 
 	
 clean :
