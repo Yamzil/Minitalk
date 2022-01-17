@@ -6,7 +6,7 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 15:13:12 by yamzil            #+#    #+#             */
-/*   Updated: 2022/01/17 13:27:31 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/01/17 18:32:28 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ void	ft_putendl_fd(char *s, int fd)
 	write (fd, "\n", 1);
 }
 
-size_t	ft_strlen(const char *s)
+void	ft_putchar(char c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	write(1, &c, 1);
 }
